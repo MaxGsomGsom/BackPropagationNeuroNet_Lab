@@ -24,8 +24,8 @@ namespace NeuroNets6
             this.sizeIn = sizeIn;
             this.sizeOut = 0;
 
-            sizeMid = (sizeIn + sizeOut) / 2;
-
+            //sizeMid = (sizeIn + sizeOut) / 2;
+            sizeMid = sizeOut * 100;
             container = new List<Neuron>[] { midNeurons, endNeurons };
         }
 
@@ -64,8 +64,8 @@ namespace NeuroNets6
         public void AddNeuron(string value)
         {
             sizeOut++;
-            sizeMid = (sizeIn + sizeOut) / 2;
-
+            //sizeMid = (sizeIn + sizeOut) / 2;
+            sizeMid = sizeOut * 100;
             midNeurons.Clear();
             for (int i = 0; i < sizeMid; i++)
             {
@@ -79,7 +79,7 @@ namespace NeuroNets6
                 endNeurons[i].InitW(sizeMid);
             }
 
-            Neuron neuron1 = new Neuron();
+            Neuron neuron1 = new Neuron(value);
             neuron1.InitW(sizeMid);
             endNeurons.Add(neuron1);
         }
@@ -124,18 +124,37 @@ namespace NeuroNets6
             }
 
             //получаем нейрон с положительным выходом
-            for (int k = 0; k < endNeurons.Count; k++)
+            double max = double.MinValue;
+            double min = double.MaxValue;
+            int num = -1;
+            for (int i = 0; i < endNeurons.Count; i++)
             {
-                if (endNeurons[k].Out > 0) return endNeurons[k].Name;
+                double result = endNeurons[i].Out;
+                if (result >= max)
+                {
+                    max = result;
+                    num = i;
+                }
+                if (result <= min) min = result;
             }
 
-            return "Not recognized";
+            if (num == -1) return "Not recognized";
+
+            return endNeurons[num].Name;
+
+
+
+
+
+
         }
 
         //функция активации
         double F(double x)
         {
-            return 1 / (1 + Math.Pow(Math.E, -x));
+            double h = 1;
+
+            return 1 / (1 + Math.Pow(Math.E, -x/h));
         }
 
         //производная функции активации
@@ -147,50 +166,73 @@ namespace NeuroNets6
         //обучение
         public void Learn(int neuronNum, int[] x)
         {
-            //вычисляем входные суммы и выходы нейронов
-            Recognize(x);
 
-            //для конечных нейронов
-            for (int k = 0; k < endNeurons.Count; k++)
+            bool needLearn = true;
+            double h = 1; //скорость обучения
+
+            while (needLearn)
             {
-                //находим внутреннюю ошибку конечного нейрона
-                double err = 0;
-                if (k == neuronNum) err = ((double)TrueImage.True - endNeurons[k].Out) * F_(endNeurons[k].WXsum);
-                else err = ((double)TrueImage.False - endNeurons[k].Out) * F_(endNeurons[k].WXsum);
-                endNeurons[k].Err = err;
+                //вычисляем входные суммы и выходы нейронов
+                Recognize(x);
 
-                //меняем связи конечного нейрона
-                for (int j = 0; j < midNeurons.Count; j++)
-                {
-                    endNeurons[k].W[j] = endNeurons[k].W[j] + err * midNeurons[j].Out;
-                }
-
-            }
-
-
-
-            //для внутренних нейронов
-            for (int j = 0; j < midNeurons.Count; j++)
-            {
-                //находим сумму ошибок последующих нейронов
-                double errBack = 0;
+                //для конечных нейронов
                 for (int k = 0; k < endNeurons.Count; k++)
                 {
-                    errBack += endNeurons[k].W[j] * endNeurons[k].Err;
+                    //находим внутреннюю ошибку конечного нейрона
+                    double err = 0;
+                    if (k == neuronNum) err = ((double)TrueImage.True - endNeurons[k].Out);// * F_(endNeurons[k].WXsum); //////////////////
+                    else err = ((double)TrueImage.False - endNeurons[k].Out) * F_(endNeurons[k].WXsum);
+                    endNeurons[k].Err = err;
+
+                    //меняем связи конечного нейрона
+                    for (int j = 0; j < midNeurons.Count; j++)
+                    {
+                        endNeurons[k].W[j] = endNeurons[k].W[j] + err * midNeurons[j].Out * h;
+                    }
+
                 }
 
 
-                //находим внутреннюю ошибку нейрона
-                double err = errBack * F_(midNeurons[j].WXsum);
-                midNeurons[j].Err = err;
 
-                //меняем связи нейрона
-                for (int i = 0; i < midNeurons.Count; i++)
+                //для внутренних нейронов
+                for (int j = 0; j < midNeurons.Count; j++)
                 {
-                    midNeurons[j].W[i] = midNeurons[j].W[i] + err * x[i];
+                    //находим сумму ошибок последующих нейронов
+                    double errBack = 0;
+                    for (int k = 0; k < endNeurons.Count; k++)
+                    {
+                        errBack += endNeurons[k].W[j] * endNeurons[k].Err;
+                    }
+
+
+                    //находим внутреннюю ошибку нейрона
+                    double err = errBack * F_(midNeurons[j].WXsum);
+                    midNeurons[j].Err = err;
+
+                    //меняем связи нейрона
+                    for (int i = 0; i < midNeurons.Count; i++)
+                    {
+                        midNeurons[j].W[i] = midNeurons[j].W[i] + err * x[i] * h;
+                    }
+
                 }
+
+
+                double err1 = 0;
+                for (int k = 0; k < endNeurons.Count; k++)
+                {
+                    //находим внутреннюю ошибку конечного нейрона
+                    if (k == neuronNum) err1 += ((double)TrueImage.True - endNeurons[k].Out) * F_(endNeurons[k].WXsum);
+                    else err1 += ((double)TrueImage.False - endNeurons[k].Out) * F_(endNeurons[k].WXsum);
+                }
+
+                //необходимо дообучение
+                if (Math.Abs(err1) > 0.01 * endNeurons.Count) needLearn = true;
+                else needLearn = false;
 
             }
+
+
 
 
 

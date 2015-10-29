@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
+using System.IO;
 
 namespace NeuroNets6
 {
     public partial class MainForm : Form
     {
         NeuroNet net; //сеть
-        int size = 200; //размер квадрата
+        int size = 100; //размер квадрата
         Graphics picBoxG; //картинка для вывода на экран
         Bitmap img; 
         Graphics workG; //картинка для считывания
@@ -38,7 +39,9 @@ namespace NeuroNets6
         {
             string result = net.Recognize(ReadFromField());
 
-            MessageBox.Show(result);
+            picBoxG.DrawString("Result:", new Font(FontFamily.GenericMonospace, 15, FontStyle.Bold), Brushes.Black, new PointF(10, 170));
+            picBoxG.DrawString(result, new Font(FontFamily.GenericMonospace, 15, FontStyle.Bold), Brushes.Red, new PointF(10, 200));
+            //MessageBox.Show(result);
         }
 
         //рисование
@@ -46,11 +49,11 @@ namespace NeuroNets6
         {
             if (e.Button == MouseButtons.Left)
             {
-                picBoxG.FillEllipse(Brushes.Black, e.X, e.Y, 15, 15);
-                picBoxG.DrawEllipse(Pens.Black, e.X, e.Y, 15, 15);
+                picBoxG.FillEllipse(Brushes.Black, e.X - 7, e.Y - 7, 15, 15);
+                picBoxG.DrawEllipse(Pens.Black, e.X - 7, e.Y - 7, 15, 15);
 
-                workG.FillEllipse(Brushes.Black, e.X, e.Y, 15, 15);
-                workG.DrawEllipse(Pens.Black, e.X, e.Y, 15, 15);
+                workG.FillEllipse(Brushes.Black, e.X - 7 - 50, e.Y - 7 - 50, 15, 15);
+                workG.DrawEllipse(Pens.Black, e.X - 7 - 50, e.Y - 7 - 50, 15, 15);
             }
         }
 
@@ -81,6 +84,7 @@ namespace NeuroNets6
             {
                 picBoxG.Clear(Color.White);
                 workG.Clear(Color.White);
+                picBoxG.DrawRectangle(Pens.Gray, 49, 49, 101, 101);
             }
         }
 
@@ -117,12 +121,18 @@ namespace NeuroNets6
         {
             int pos = listBox1neurons.SelectedIndex;
 
+            //img.Save("test.bmp");
+            //return;
+
             if (pos >= 0)
             {
                 net.Learn(pos, ReadFromField());
                 picBoxG.Clear(Color.White);
                 workG.Clear(Color.White);
+                picBoxG.DrawRectangle(Pens.Gray, 49, 49, 101, 101);
             }
         }
+
+
     }
 }
