@@ -39,12 +39,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1recognize
             // 
             this.button1recognize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button1recognize.Location = new System.Drawing.Point(32, 294);
+            this.button1recognize.Location = new System.Drawing.Point(107, 344);
             this.button1recognize.Margin = new System.Windows.Forms.Padding(4);
             this.button1recognize.Name = "button1recognize";
             this.button1recognize.Size = new System.Drawing.Size(157, 35);
@@ -57,9 +58,9 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.White;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 59);
+            this.pictureBox1.Location = new System.Drawing.Point(37, 37);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(200, 200);
+            this.pictureBox1.Size = new System.Drawing.Size(300, 300);
             this.pictureBox1.TabIndex = 26;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
@@ -67,7 +68,7 @@
             // 
             // button2save
             // 
-            this.button2save.Location = new System.Drawing.Point(410, 61);
+            this.button2save.Location = new System.Drawing.Point(532, 62);
             this.button2save.Name = "button2save";
             this.button2save.Size = new System.Drawing.Size(144, 41);
             this.button2save.TabIndex = 27;
@@ -77,7 +78,7 @@
             // 
             // button3load
             // 
-            this.button3load.Location = new System.Drawing.Point(410, 12);
+            this.button3load.Location = new System.Drawing.Point(532, 13);
             this.button3load.Name = "button3load";
             this.button3load.Size = new System.Drawing.Size(144, 43);
             this.button3load.TabIndex = 28;
@@ -89,15 +90,15 @@
             // 
             this.listBox1neurons.FormattingEnabled = true;
             this.listBox1neurons.ItemHeight = 16;
-            this.listBox1neurons.Location = new System.Drawing.Point(252, 127);
+            this.listBox1neurons.Location = new System.Drawing.Point(374, 128);
             this.listBox1neurons.Name = "listBox1neurons";
-            this.listBox1neurons.Size = new System.Drawing.Size(302, 148);
+            this.listBox1neurons.Size = new System.Drawing.Size(302, 180);
             this.listBox1neurons.TabIndex = 29;
             // 
             // button4learn
             // 
             this.button4learn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button4learn.Location = new System.Drawing.Point(324, 294);
+            this.button4learn.Location = new System.Drawing.Point(449, 320);
             this.button4learn.Name = "button4learn";
             this.button4learn.Size = new System.Drawing.Size(144, 35);
             this.button4learn.TabIndex = 30;
@@ -107,7 +108,7 @@
             // 
             // button4add
             // 
-            this.button4add.Location = new System.Drawing.Point(252, 61);
+            this.button4add.Location = new System.Drawing.Point(374, 62);
             this.button4add.Name = "button4add";
             this.button4add.Size = new System.Drawing.Size(122, 41);
             this.button4add.TabIndex = 31;
@@ -117,7 +118,7 @@
             // 
             // textBox1value
             // 
-            this.textBox1value.Location = new System.Drawing.Point(252, 31);
+            this.textBox1value.Location = new System.Drawing.Point(374, 32);
             this.textBox1value.Name = "textBox1value";
             this.textBox1value.Size = new System.Drawing.Size(122, 22);
             this.textBox1value.TabIndex = 32;
@@ -125,7 +126,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(249, 11);
+            this.label1.Location = new System.Drawing.Point(371, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(125, 17);
             this.label1.TabIndex = 33;
@@ -133,9 +134,11 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(-9, -25);
+            this.groupBox1.Controls.Add(this.pictureBox1);
+            this.groupBox1.Controls.Add(this.button1recognize);
+            this.groupBox1.Location = new System.Drawing.Point(-15, -24);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(242, 403);
+            this.groupBox1.Size = new System.Drawing.Size(359, 423);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
@@ -144,7 +147,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(581, 356);
+            this.ClientSize = new System.Drawing.Size(699, 381);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1value);
             this.Controls.Add(this.button4add);
@@ -152,14 +155,13 @@
             this.Controls.Add(this.listBox1neurons);
             this.Controls.Add(this.button3load);
             this.Controls.Add(this.button2save);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.button1recognize);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NeuroNets6";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

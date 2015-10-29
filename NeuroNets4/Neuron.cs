@@ -36,7 +36,7 @@ namespace NeuroNets6
             }
             set
             {
-                value = err;
+                err = value;
             }
 
         }
@@ -94,7 +94,7 @@ namespace NeuroNets6
             //инициализация весов
             for (int i = 0; i < size; i++)
             {
-                w[i] = r.Next(-5, 5) * 0.1;
+                w[i] = r.Next(-50, 50) * 0.01;
             }
         }
 
@@ -103,7 +103,7 @@ namespace NeuroNets6
     //при обучении определяет верный или неверный образ
     public enum TrueImage
     {
-        False=0,
+        False=-1,
         True=1
     }
 
