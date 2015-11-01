@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
+using System.Globalization;
 
 namespace NeuroNets6
 {
@@ -133,6 +134,16 @@ namespace NeuroNets6
             }
         }
 
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            //if (e.KeyCode == Keys.Shift) return;
+            string s = (new KeysConverter()).ConvertToString(null, new CultureInfo("ru"), e.KeyCode);
+            //if (e.Shift == true) return;
 
+            picBoxG.DrawString(s, new Font(FontFamily.GenericMonospace, 80, FontStyle.Bold), Brushes.Black, new PointF(55, 55));
+            workG.DrawString(s, new Font(FontFamily.GenericMonospace, 80, FontStyle.Bold), Brushes.Black, new PointF(5, 5));
+
+        }
+  
     }
 }

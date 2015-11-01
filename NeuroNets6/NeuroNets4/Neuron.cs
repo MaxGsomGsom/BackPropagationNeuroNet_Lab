@@ -111,12 +111,12 @@ namespace NeuroNets6
     public struct Image
     {
         public int[] x;
-        public TrueImage t;
+        public int neuronNum;
 
-        public Image(int[] x, TrueImage t)
+        public Image(int[] x, int neuronNum)
         {
             this.x = x;
-            this.t = t;
+            this.neuronNum = neuronNum;
         }
     }
 }
