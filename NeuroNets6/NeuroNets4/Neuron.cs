@@ -16,7 +16,7 @@ namespace NeuroNets6
 
         string name = ""; //название класса
 
-        double wXsum = 0;
+        double outDiff = 0;
 
 
         public string Name
@@ -68,16 +68,16 @@ namespace NeuroNets6
             }
         }
 
-        public double WXsum
+        public double OutDiff
         {
             get
             {
-                return wXsum;
+                return outDiff;
             }
 
             set
             {
-                wXsum = value;
+                outDiff = value;
             }
         }
 
@@ -87,10 +87,9 @@ namespace NeuroNets6
 
         }
 
-        public void InitW(int size)
+        public void InitW(int size, Random r)
         {
             w = new double[size];
-            Random r = new Random((int)DateTime.Now.Ticks);
             //инициализация весов
             for (int i = 0; i < size; i++)
             {
@@ -100,20 +99,14 @@ namespace NeuroNets6
 
     }
 
-    //при обучении определяет верный или неверный образ
-    public enum TrueImage
-    {
-        False=-1,
-        True=1
-    }
 
     [Serializable]
     public struct Image
     {
-        public int[] x;
+        public double[] x;
         public int neuronNum;
 
-        public Image(int[] x, int neuronNum)
+        public Image(double[] x, int neuronNum)
         {
             this.x = x;
             this.neuronNum = neuronNum;
